@@ -1,0 +1,86 @@
+.jobs-page { padding: 32px 0 60px; }
+.jobs-search-bar { margin-bottom: 20px; }
+.jobs-search-form {
+  display: flex;
+  gap: 10px;
+  background: var(--surface);
+  padding: 12px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  flex-wrap: wrap;
+}
+.search-input-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  min-width: 180px;
+  position: relative;
+}
+.search-input-wrap .si { position: absolute; left: 10px; color: var(--text-muted); }
+.search-input-wrap input {
+  width: 100%;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 9px 12px 9px 34px;
+  font-size: 0.9rem;
+  outline: none;
+  background: var(--bg);
+}
+.search-input-wrap input:focus { border-color: var(--primary); }
+
+.filters-panel {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+.filters-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding-top: 8px;
+}
+
+.jobs-results-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+.active-filters-note { color: var(--primary); font-weight: 600; }
+.clear-filters-btn {
+  display: flex; align-items: center; gap: 4px;
+  background: none; border: none; color: var(--primary);
+  font-size: 0.85rem; cursor: pointer; font-weight: 600;
+}
+
+.jobs-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
+
+.no-results {
+  text-align: center;
+  padding: 80px 20px;
+  color: var(--text-muted);
+}
+.no-results h3 { font-size: 1.3rem; margin: 12px 0 8px; color: var(--text); }
+.no-results p { margin-bottom: 20px; }
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 40px;
+}
+.page-info { font-size: 0.875rem; color: var(--text-muted); }

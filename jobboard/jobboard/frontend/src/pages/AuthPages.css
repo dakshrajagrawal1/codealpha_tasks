@@ -1,0 +1,53 @@
+.auth-page {
+  min-height: calc(100vh - 64px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 40px 16px;
+  background: linear-gradient(135deg, var(--bg) 0%, var(--primary-light) 100%);
+}
+.auth-card {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  padding: 40px;
+  width: 100%; max-width: 440px;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border);
+}
+.auth-logo {
+  display: flex; align-items: center; gap: 8px;
+  font-family: var(--font-heading); font-weight: 800;
+  font-size: 1.2rem; color: var(--primary);
+  margin-bottom: 24px;
+}
+.auth-card h1 { font-size: 1.6rem; margin-bottom: 6px; }
+.auth-sub { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 28px; }
+
+.role-selector { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 24px; }
+.role-btn {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  padding: 16px 12px;
+  border: 2px solid var(--border); border-radius: var(--radius-md);
+  background: var(--surface-2); cursor: pointer; transition: all 0.2s;
+  text-align: center;
+}
+.role-btn:hover { border-color: var(--primary); }
+.role-btn.active { border-color: var(--primary); background: var(--primary-light); }
+.role-btn strong { font-size: 0.9rem; color: var(--text); }
+.role-btn span { font-size: 0.75rem; color: var(--text-muted); }
+
+.password-field { position: relative; }
+.password-field input { padding-right: 40px; }
+.password-field button {
+  position: absolute; right: 10px; top: 50%;
+  transform: translateY(-50%);
+  background: none; border: none;
+  color: var(--text-muted); cursor: pointer; padding: 4px;
+}
+
+.btn-full { width: 100%; justify-content: center; padding: 12px; }
+.auth-footer { text-align: center; margin-top: 20px; font-size: 0.875rem; color: var(--text-muted); }
+.auth-footer a { color: var(--primary); font-weight: 600; }
+.demo-hint {
+  margin-top: 16px; padding: 12px;
+  background: var(--primary-light); border-radius: var(--radius);
+  font-size: 0.8rem; text-align: center; color: var(--primary-dark);
+}

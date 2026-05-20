@@ -1,0 +1,15 @@
+.not-found {
+  min-height: 60vh; display: flex;
+  align-items: center; justify-content: center;
+  text-align: center; padding: 40px 20px;
+}
+.not-found-number {
+  font-size: 8rem; font-weight: 800;
+  font-family: var(--font-heading);
+  background: linear-gradient(135deg, var(--primary), #a78bfa);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text; line-height: 1;
+}
+.not-found-content h1 { font-size: 1.8rem; margin-bottom: 12px; }
+.not-found-content p { color: var(--text-muted); margin-bottom: 32px; font-size: 1rem; }
+.not-found-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }

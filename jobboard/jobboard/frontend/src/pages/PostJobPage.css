@@ -1,0 +1,25 @@
+.post-job-page { padding: 32px 0 60px; }
+.post-job-card {
+  max-width: 800px; margin: 0 auto;
+  background: var(--surface); border-radius: var(--radius-lg);
+  border: 1px solid var(--border); overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.post-job-header {
+  background: linear-gradient(135deg, #1a1a2e, #16213e);
+  padding: 32px; color: white;
+}
+.post-job-header h1 { font-size: 1.6rem; margin-bottom: 6px; }
+.post-job-header p { color: rgba(255,255,255,0.65); font-size: 0.9rem; }
+.post-job-form { padding: 32px; display: flex; flex-direction: column; gap: 28px; }
+fieldset { border: none; padding: 0; }
+legend {
+  font-family: var(--font-heading); font-weight: 700;
+  font-size: 1rem; color: var(--text);
+  margin-bottom: 16px; padding-bottom: 8px;
+  border-bottom: 2px solid var(--primary-light);
+  width: 100%;
+}
+.form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+.checkbox-label { display: flex; align-items: center; gap: 8px; font-size: 0.875rem; cursor: pointer; }
+.post-job-actions { display: flex; justify-content: flex-end; gap: 12px; padding-top: 8px; border-top: 1px solid var(--border); }
