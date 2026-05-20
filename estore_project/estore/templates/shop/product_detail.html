@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+{% block title %}{{ product.name }} — LUXE{% endblock %}
+{% block extra_css %}
+<style>
+.breadcrumb { padding:1.2rem 2.5rem; font-size:.75rem; color:var(--muted); letter-spacing:.05em; }
+.breadcrumb a { color:var(--muted); }
+.breadcrumb a:hover { color:var(--accent); }
+
+.detail { display:grid; grid-template-columns:1fr 1fr; max-width:1000px; margin:0 auto; padding:2rem 2.5rem; gap:4rem; }
+.detail-img {
+  aspect-ratio:1; background:var(--surface2); border-radius:2px; overflow:hidden;
+  display:flex; align-items:center; justify-content:center;
+}
+.detail-img img { width:100%; height:100%; object-fit:cover; }
+.detail-img .placeholder { font-family:'Cormorant Garamond',serif; font-size:6rem; color:var(--border); }
+
+.detail-info { display:flex; flex-direction:column; gap:1.2rem; padding-top:.5rem; }
+.detail-cat { font-size:.65rem; letter-spacing:.18em; text-transform:uppercase; color:var(--accent); }
+.detail-name { font-family:'Cormorant Garamond',serif; font-size:2.2rem; font-weight:300; line-height:1.2; }
+.detail-price { font-size:1.6rem; color:var(--accent); font-weight:300; font-family:'Cormorant Garamond',serif; }
+.detail-desc { color:var(--muted); line-height:1.7; font-size:.85rem; border-top:1px solid var(--border); padding-top:1.2rem; }
+.detail-stock { font-size:.75rem; color:var(--muted); }
+.detail-stock span { color:#6ec87a; }
+
+.qty-row { display:flex; align-items:center; gap:1rem; }
+.qty-ctrl { display:flex; align-items:center; border:1px solid var(--border); border-radius:2px; }
+.qty-btn { background:none; border:none; color:var(--text); width:36px; height:36px; font-size:1rem; cursor:pointer; transition:background .15s; }
+.qty-btn:hover { background:var(--surface2); }
+.qty-val { width:40px; text-align:center; font-size:.9rem; background:none; border:none; color:var(--text); font-family:'DM Sans',sans-serif; }
+
+.btn-primary {
+  flex:1; background:var(--accent); color:#0e0e0e; border:none;
+  padding:.8rem; border-radius:2px; font-size:.8rem;
+  font-weight:500; letter-spacing:.1em; text-transform:uppercase;
+  cursor:pointer; font-family:'DM Sans',sans-serif; transition:background .2s;
+}
+.btn-primary:hover { background:var(--accent2); }
+
+.related { padding:3rem 2.5rem; border-top:1px solid var(--border); }
+.related h2 { font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-weight:300; margin-bottom:1.5rem; color:var(--muted); }
+.rel-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:1rem; }
+.rel-card { background:var(--surface); border-radius:2px; overflow:hidden; }
+.rel-card img, .rel-ph { width:100%; aspect-ratio:1; object-fit:cover; background:var(--surface2); display:flex; align-items:center; justify-content:center; }
+.rel-ph { font-family:'Cormorant Garamond',serif; font-size:2rem; color:var(--border); }
+.rel-body { padding:.75rem; }
+.rel-name { font-size:.85rem; margin-bottom:.25rem; }
+.rel-price { color:var(--accent); font-size:.8rem; }
+
+@media(max-width:700px){
+  .detail { grid-template-columns:1fr; gap:2rem; }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="breadcrumb">
+  <a href="/">Shop</a> / {% if product.category %}<a href="/?category={{ product.category.id }}">{{ product.category.name }}</a> / {% endif %}{{ product.name }}
+</div>
+
+<div class="detail">
+  <div class="detail-img">
+    {% if product.image_url %}
+      <img src="{{ product.image_url }}" alt="{{ product.name }}">
+    {% else %}
+      <div class="placeholder">{{ product.name|first }}</div>
+    {% endif %}
+  </div>
+  <div class="detail-info">
+    {% if product.category %}<div class="detail-cat">{{ product.category.name }}</div>{% endif %}
+    <h1 class="detail-name">{{ product.name }}</h1>
+    <div class="detail-price">${{ product.price }}</div>
+    <div class="detail-desc">{{ product.description }}</div>
+    <div class="detail-stock">In stock: <span>{{ product.stock }} units</span></div>
+    <div class="qty-row">
+      <div class="qty-ctrl">
+        <button class="qty-btn" onclick="changeQty(-1)">−</button>
+        <input class="qty-val" id="qty" value="1" readonly>
+        <button class="qty-btn" onclick="changeQty(1)">+</button>
+      </div>
+      <button class="btn-primary" onclick="addToCart({{ product.id }})">Add to Bag</button>
+    </div>
+  </div>
+</div>
+
+{% if related %}
+<div class="related">
+  <h2>You may also like</h2>
+  <div class="rel-grid">
+    {% for p in related %}
+    <a href="/product/{{ p.id }}/">
+      <div class="rel-card">
+        {% if p.image_url %}
+          <img src="{{ p.image_url }}" alt="{{ p.name }}">
+        {% else %}
+          <div class="rel-ph">{{ p.name|first }}</div>
+        {% endif %}
+        <div class="rel-body">
+          <div class="rel-name">{{ p.name }}</div>
+          <div class="rel-price">${{ p.price }}</div>
+        </div>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function changeQty(d){
+  const el = document.getElementById('qty');
+  el.value = Math.max(1, parseInt(el.value) + d);
+}
+function addToCart(pid){
+  const qty = parseInt(document.getElementById('qty').value);
+  fetch('/cart/add/', {
+    method:'POST',
+    headers:{'Content-Type':'application/json','X-CSRFToken':getCookie('csrftoken')},
+    body:JSON.stringify({product_id:pid, quantity:qty})
+  }).then(r=>r.json()).then(d=>{
+    updateCartCount(d.total_items);
+    showToast('Added to bag!');
+  });
+}
+function getCookie(name){
+  let v=document.cookie.match('(^|;) ?'+name+'=([^;]*)(;|$)');
+  return v?v[2]:null;
+}
+</script>
+{% endblock %}
